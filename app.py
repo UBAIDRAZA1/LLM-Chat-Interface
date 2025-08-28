@@ -136,20 +136,32 @@ if prompt:
                 ai_response = response['message']['content']
                 ai_timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
                 
-                # Custom response for "Tell me about Ubaid Raza"
+                # Custom response for "Tell me about Ubaid Raza" with improved formatting
                 if "ubaid raza" in prompt.lower():
-                    profile_info = f"**About {st.session_state.user_profile['name']}**\n" \
-                                 f"- **Objective**: {st.session_state.user_profile['objective']}\n" \
-                                 f"- **Profession**: {st.session_state.user_profile['profession']}\n" \
-                                 f"- **Skills**: {st.session_state.user_profile['skills']}\n" \
-                                 f"- **Experience**: {st.session_state.user_profile['experience']}\n" \
-                                 f"- **Interests**: {st.session_state.user_profile['interests']}\n" \
-                                 f"- **Education**: {st.session_state.user_profile['education']}\n" \
-                                 f"- **Personal Profile**: {st.session_state.user_profile['personal']}\n" \
-                                 f"- **Contact**: {st.session_state.user_profile['contact']}"
+                    profile_info = f"## About {st.session_state.user_profile['name']}\n\n" \
+                                 f"### Objective\n" \
+                                 f"{st.session_state.user_profile['objective']}\n\n" \
+                                 f"### Profession\n" \
+                                 f"{st.session_state.user_profile['profession']}\n\n" \
+                                 f"### Skills\n" \
+                                 f"- {st.session_state.user_profile['skills'].replace(', ', '\n- ')}\n\n" \
+                                 f"### Experience\n" \
+                                 f"{st.session_state.user_profile['experience']}\n\n" \
+                                 f"### Interests\n" \
+                                 f"- {st.session_state.user_profile['interests'].replace(', ', '\n- ')}\n\n" \
+                                 f"### Education\n" \
+                                 f"{st.session_state.user_profile['education']}\n\n" \
+                                 f"### Personal Profile\n" \
+                                 f"{st.session_state.user_profile['personal']}\n\n" \
+                                 f"### Contact\n" \
+                                 f"{st.session_state.user_profile['contact']}"
                     ai_response = profile_info
                     if st.session_state.user_image:
                         st.image(st.session_state.user_image, caption=f"Image of {st.session_state.user_profile['name']}", use_column_width=True)
+                
+                # General response formatting for better readability
+                else:
+                    ai_response = f"## Response\n\n" + ai_response.replace("\n", "\n\n")  # Add spacing between lines
                 
                 st.markdown(f"**Assistant** ({ai_timestamp}): {ai_response}")
                 
